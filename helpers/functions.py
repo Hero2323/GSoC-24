@@ -1,6 +1,6 @@
 import os
 import json
-from typing import Optional
+from typing import List, Optional
 import numpy as np
 import pandas as pd
 from fuzzywuzzy import fuzz
@@ -137,7 +137,7 @@ def extract_comments(df: pd.DataFrame):
             if nirjas_comments.total_lines_of_comments == 0:
                 raise Exception() # Go to the except case to read all the file, even if it has no comments
             all_comments = []
-            with open(os.path.join('extras', row['file_path']), "r") as f:
+            with open(row['file_path'], "r") as f:
                 all_lines = f.readlines()
             for single_line_comment in nirjas_comments['single_line_comment']:
                 all_comments.append(single_line_comment['comment'])
@@ -156,13 +156,13 @@ def extract_comments(df: pd.DataFrame):
             comments = "".join(all_comments)
             comments_extracted = True
         except:
-            with open(os.path.join('extras', row['file path']), "r") as f:
+            with open(row['file_path'], "r") as f:
                 comments = f.read()
         df.loc[index, 'file_comments'] = comments
         df.loc[index, 'comments_extracted'] = comments_extracted
     return df
 
-def scan(file_comments : list[str], licenseList : pd.DataFrame): 
+def scan(file_comments : List[str], licenseList : pd.DataFrame): 
     '''
     Scans a file's comments for potential licenses using semantic search and fuzzy string matching.
 
@@ -222,7 +222,7 @@ def scan(file_comments : list[str], licenseList : pd.DataFrame):
                         comment
                     )
                 ) 
-
+    
     # Try to append lines that match with a similarity score of more than 40% with one of the lines in 
     # Any of the licenses. The goal is to get a bigger and bigger text chunk that matches to a bigger 
     # text chunk in one of the license texts - The bigger the chunk, the more likely that this match is 
@@ -238,6 +238,9 @@ def scan(file_comments : list[str], licenseList : pd.DataFrame):
             appended_comments.append(appended_comment)
             appended_comment = []
     
+    if len(appended_comment) > 0 and appended_comment not in appended_comments:
+        appended_comments.append(appended_comment)
+
     # Attempt the final - second level license match with all the bigger text chunks
     # In some licenses, the license header is used instead of the license text
     # In case that a license has a license header, we match all chunks with both and take 
@@ -248,7 +251,7 @@ def scan(file_comments : list[str], licenseList : pd.DataFrame):
         fuzzy_similarity_matrix_2 = np.zeros(len(licenseList))
         for i in range(len(licenseList)):
             fuzzy_similarity_matrix_2[i] = fuzz.ratio(appended_comment, licenseList.loc[i, 'text'])
-            if licenseList.loc[i, 'license_header']:
+            if pd.notna(licenseList.loc[i, 'license_header']):
                 license_header_sim_score = fuzz.ratio(appended_comment, licenseList.loc[i, 'license_header'].replace('\n\n', '\n'))
                 fuzzy_similarity_matrix_2[i] = license_header_sim_score if license_header_sim_score > fuzzy_similarity_matrix_2[i] else fuzzy_similarity_matrix_2[i]
         top_5_license_text_indices = np.argsort(fuzzy_similarity_matrix_2)[-5:][::-1]

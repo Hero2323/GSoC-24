@@ -1,4 +1,25 @@
 
+def prompt_for_one_stage_license_matching(comments : str) -> str:
+  return f"""
+    [Task]
+    Carefully analyze the provided text to determine if it contains any software licenses.
+
+    [Guidelines]
+    1.  **License Identification:** If a license is found, clearly state its name and its corresponding SPDX identifier (e.g., MIT License, SPDX-License-Identifier: MIT).
+    2.  **Evidence Extraction:** For each identified license, extract the specific text snippet(s) from the provided text that confirm its presence. Include surrounding context if it helps clarify the license's applicability.
+    3.  **No License Scenario:** If no license is detected in the text, explicitly state "No software license found."
+    4.  **Response Format:** Provide the results in the following format:
+        *   **Licenses = [list of identified licenses]** 
+        *   **SPDX-IDs = [list of corresponding SPDX identifiers]**
+
+        If no licenses are found, both lists should be empty:
+
+        *   **Licenses = []**
+        *   **SPDX-IDs = []** 
+
+    [Text]
+    {comments}
+    """
 
 def prompt_for_license_text_identification(comments : str, comments_extracted: bool) -> str:
   return f"""
@@ -81,4 +102,49 @@ def prompt_for_obligation_clause_verification(license_text : str, license_obliga
 
   [Corresponding Obligations]
   {license_obligations}
+  """
+
+
+def prompt_for_license_compatibility_through_obligations(license_a_obligations : str, license_b_obligations : str) -> str:
+  return f"""
+  [Task]
+  Analyze the obligations imposed on licensees by the two license texts provided below. Consider the following key aspects:
+
+  1.  **Attribution:**
+    *   Do the licenses require attribution of the original author(s)? If so, what specific information must be included, and in what format?
+    *   Are there any restrictions on how the attribution can be presented (e.g., size, placement)?
+
+  2.  **Copyleft/ShareAlike:**
+    *   Do the licenses include copyleft or ShareAlike provisions? If so, what obligations do these impose on the distribution of derivative works?
+    *   Are there any exceptions or exemptions to the copyleft/ShareAlike requirements?
+
+  3.  **Modification and Distribution:**
+    *   Do the licenses allow modification of the software? If so, are there any conditions or restrictions on how the modified software can be distributed?
+    *   Are there any requirements for the disclosure of source code or changes made to the software?
+
+  4.  **Commercial Use:**
+    *   Do the licenses explicitly permit or restrict commercial use of the software?
+    *   If commercial use is permitted, are there any specific obligations or limitations associated with it?
+
+  5.  **Patent Grants:**
+    *   Do the licenses include any patent grants or licenses? If so, what rights do they grant, and under what conditions?
+
+  6.  **Liability and Warranty Disclaimers:**
+    *   Do the licenses include disclaimers of liability or warranty? If so, what are the specific terms and limitations of these disclaimers?
+
+  7.  **Additional Considerations:**
+    *   Are there any other important factors, provisions, or obligations in either license that may affect the analysis? This may include compatibility with other licenses, jurisdictional considerations, or any unique clauses not covered above.
+    *   How might these additional considerations impact compliance or introduce challenges when working with the two licenses?
+
+  Based on your analysis, provide a comprehensive summary of the obligations imposed by each license. Highlight any potential conflicts or ambiguities between the obligations of the two licenses.
+
+  Overall Verdict:
+
+  Based on the analysis above, provide an overall verdict on the relationship between the obligations of the two licenses. Are the obligations generally compatible, or are there significant conflicts that would make it difficult or impossible to comply with both licenses simultaneously? Briefly explain the reasoning behind your verdict.
+
+  License Obligations A: 
+  {license_a_obligations}
+
+  License Obligations B:
+  {license_b_obligations}
   """

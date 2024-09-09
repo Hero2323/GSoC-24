@@ -275,6 +275,9 @@ class LLMClient():
             existing_files = [f for f in os.listdir(output_path) if os.path.isfile(os.path.join(output_path, f))]
             output_name = len(existing_files) + 1
 
+        if not (os.path.exists(output_path) and os.path.isdir(output_path)):
+            os.mkdir(output_path)
+
         df.to_csv(os.path.join(output_path, f'{output_name}.csv'))
         shutil.copyfile(''+self.error_log_file_name, f'{output_name}.log')
         
@@ -353,6 +356,9 @@ class LLMClient():
         if output_name is None:
             existing_files = [f for f in os.listdir(output_path) if os.path.isfile(os.path.join(output_path, f))]
             output_name = len(existing_files) + 1
+
+        if not (os.path.exists(output_path) and os.path.isdir(output_path)):
+            os.mkdir(output_path)
 
         # Save the processed DataFrame and copy the error log
         df.to_csv(os.path.join(output_path, f'{output_name}.csv'))
@@ -435,6 +441,9 @@ class LLMClient():
         if output_name is None:
             existing_files = [f for f in os.listdir(output_path) if os.path.isfile(os.path.join(output_path, f))]
             output_name = len(existing_files) + 1
+
+        if not (os.path.exists(output_path) and os.path.isdir(output_path)):
+            os.mkdir(output_path)
 
         # Save the processed DataFrame and copy the error log
         df.to_csv(os.path.join('results', f'{output_name}.csv'))

@@ -8,7 +8,7 @@
 <div align="center">
     <h2>
         <a href="https://summerofcode.withgoogle.com/programs/2024/projects/6RIfpdn6">
-            License Identification with Large Language Models (LLMs)
+            AI-Powered Software License Identification
         </a> @ 
         <a href="https://www.fossology.org/">
             FOSSology
@@ -81,7 +81,7 @@ The core of the codebase lies in the `LLMClient` class, which offers a streamlin
 
 7. **Flexibility and Extensibility:** The `LLMClient` class is designed to be flexible and extensible. It can be easily adapted to work with new LLM models and providers by adding corresponding client implementations and configurations. The codebase also provides hooks for integrating additional features and functionalities, such as custom prompt generation and output processing.
 
-A showcase of the codebase in action can be found in the following [notebook](https://github.com/Hero2323/GSoC-24/blob/main/project-showcase.ipynb)
+A showcase of the codebase in action can be found in the following [notebook](./project-showcase.ipynb)
 
 ## 2. Exploration of LLM Capabilities in License Identification and Related Tasks
 This section delves into the various ways Large Language Models (LLMs) were employed to tackle tasks related to license identification and management. I explored the feasibility of direct license matching, extraction of license text, conversion to structured obligations, verification of obligation clauses, and assessment of license compatibility. Each subsection presents findings, examples, and discusses the strengths and limitations of LLM application in these specific contexts.
@@ -309,8 +309,15 @@ The primary focus of the project was to explore the potential of LLMs in the con
 The project's contributions extend beyond code development and experimentation. The documentation and dissemination of findings were also prioritized, resulting in the following:
 
 1. Atarashi Pull Request: The refined semantic search algorithm, along with necessary code modifications, was submitted as a [pull request](https://github.com/fossology/atarashi/pull/103) to the Atarashi repository.
-2. New Repository with Codebase: A dedicated repository was created under the Fossology organization to house the comprehensive codebase developed during the project. This repository serves as a centralized resource for all code related to LLM evaluation, experimentation, and license-related tasks, promoting transparency and collaboration.
+
+2. New Repository with Codebase: A dedicated repository was created under the Fossology organization to house the comprehensive codebase developed during the project. This repository serves as a centralized resource for all code related to LLM evaluation, experimentation, and license-related tasks, promoting transparency and collaboration. Furthermore, a [PR](https://github.com/fossology/atarashi/pull/104) with this codebase has been temporarily pushed to atarashi pending the creation of the new repository 'bayan'
+
 3. Fossology GSoC Wiki Updates: The Fossology [GSoC Wiki](https://fossology.github.io/gsoc/docs/2024/license-detection) was updated with weekly progress reports, providing a detailed and transparent record of the project's evolution.
+
+4. A showcase of the codebase in action can be found in the following [notebook](./project-showcase.ipynb)
+
+5. The following [repository](https://github.com/Hero2323/GSoC24) contains all my experiments throughout the project, however it is unorganized
+
 
 <h1 align="center" id="deliverables">Deliverables</h1>
   
@@ -318,12 +325,13 @@ The project's contributions extend beyond code development and experimentation. 
 
 | Tasks                                                  | Planned | Completed               |
 | -------------------------------------------------------| ------- | ----------------------- |
-| Dataset Creation                                       |   ✅    |   ✔️  (partial)          |
+| Dataset Creation                                       |   ✅    |   ❌                    |
 | LLM Comparison                                         |   ✅    |   ✔️  (partial)          |
 | Semantic Search                                        |   ❌    |   ✅                    |
 | Exploring LLM applications for license obligations     |   ❌    |   ✅                    |
 | Exploring LLM applications for license compatiblity    |   ❌    |   ✅                    |
 | Integration with FOSSology                             |   ✅    |   ✅                    |
+<!-- | Model Deployment                                       |   ✅    |   ❌                    | -->
 
 </div>
 
@@ -335,6 +343,8 @@ The project's contributions extend beyond code development and experimentation. 
 * Regarding the LLM comparison, it's important to note that several of the applications explored in this project represent novel research directions, lacking established datasets or standardized metrics for evaluation. Therefore, while tests were conducted and assessed, the evaluation primarily relied on manual scrutiny rather than quantitative metrics like accuracy.
 
 * The integration of the developed codebase is intended to be carried out within a separate repository. This decision aligns with the project's exploratory nature, as the code was not initially designed for immediate integration into the Fossology ecosystem.
+
+* Originally, I planned to deploy a final model to Fossology, however, as the project is exploratory in nature, no model tuning as done and deployment is no longer necessary.
 
 </div>
 

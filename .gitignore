@@ -6,3 +6,5 @@ logs/*
 helpers/__pychache__/*
 helpers/__pychache__/
 .vscode
+*.log
+*/__pychache__/*

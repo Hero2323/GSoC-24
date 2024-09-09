@@ -12,9 +12,6 @@ This project is designed to identify and extract relevant chunks of text that pe
   - [Step 1: Obtain an API Key](#step-1-obtain-an-api-key)
   - [Step 2: Set Up Environment Variables](#step-2-set-up-environment-variables)
 - [Basic Usage](#basic-usage)
-  - [Step 1: Prepare Your Input](#step-1-prepare-your-input)
-  - [Step 2: Run the Script](#step-2-run-the-script)
-  - [Output](#output)
 
 ## Installation
 
@@ -23,7 +20,7 @@ To run this project, you need to install the required dependencies. The project 
 ### Step 1: Clone the repository
 ```bash
 git clone https://github.com/Hero2323/GSoC-24.git
-cd yourproject
+cd GSoC-24.git
 ```
 
 ### Step 2: Install dependencies
@@ -56,9 +53,7 @@ To run the LLM models, you need to set up your API keys for the relevant service
 
 ### Step 1: Obtain an API Key
 
-* Visit OpenAI and sign up for an account if you don’t have one.
-
-* Navigate to the API section to obtain your API key.
+* Visit GroQ, TogetherAI, etc. and sign up for an account if you don’t have one.
 
 ### Step 2: Set Up Environment Variables
 
@@ -84,24 +79,16 @@ OPENAI_API_KEY=your-api-key-here
 
 ## Basic Usage
 
-### Step 1: Prepare Your Input
+```
+from helpers.llm_client import LLMClient
+from helpers.models import *
 
-Place your input text files in the appropriate directory (e.g., `input/`).
+client = LLMClient()
 
-### Step 2: Run the Script
-
-To run the script that processes the input files and identifies license-relevant chunks, use:
-
-```bash
-python main.py
+client._infer(model = Models.GEMMA_2_9b, prompt = 'Hey, How are you?', temperature = 0.1)
 ```
 
-The script will read the input files, process them using the LLM, and output the results to the `output/` directory.
-
-### Output
-
-The output files will contain the identified chunks of text relevant to licenses. The format and structure of the output can be customized as per your needs.
-
+More details can be found in the [project-showcase](https://github.com/Hero2323/GSoC-24/blob/master/project-showcase.ipynb) notebook.
 
 
 
